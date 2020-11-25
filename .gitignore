@@ -5,4 +5,3 @@ build/
 temp/
 tmp/*
 !tmp/.gitkeep
-teste
