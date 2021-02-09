@@ -1,4 +1,5 @@
-import {uuid} from 'uuidv4';
+import { v4 as uuid } from 'uuid';
+
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
