@@ -84,6 +84,5 @@ describe('ResetPasswordService', () => {
        token,
       }),
     ).rejects.toBeInstanceOf(AppError);
-
   });
 });
