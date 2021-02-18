@@ -11,6 +11,7 @@ interface IRequest {
   email: string;
   password: string;
 }
+
 @injectable()
 class CreateUserService {
   constructor(
@@ -19,7 +20,7 @@ class CreateUserService {
 
     @inject('HashProvider')
     private hasProvider: IHashProvider,
-  ){}
+  ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
 
