@@ -21,18 +21,26 @@ class ListProviderMonthAvailabilityService {
     private appointmentsRepository: IAppointmentRepository,
   ) {}
 
-  public async execute({ provider_id, month, year }: IRequest): Promise<IResponse> {
-    const appointments = await this.appointmentsRepository.findAllInMonthFromProvider({
-      provider_id,
-      year,
-      month,
-    })
+  public async execute({
+    provider_id,
+    year,
+    month,
+  }: IRequest): Promise<IResponse> {
+    const appointments = await this.appointmentsRepository.findAllInMonthFromProvider(
+      {
+        provider_id,
+        year,
+        month,
+      },
+    );
+
+    console.log(appointments);
 
     const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
 
     const eachDayArray = Array.from(
       { length: numberOfDaysInMonth },
-      (value, index) => index + 1,
+      (_, index) => index + 1,
     );
 
     const availability = eachDayArray.map(day => {
