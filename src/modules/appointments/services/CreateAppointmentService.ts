@@ -28,7 +28,7 @@ class CreateAppointmentService {
 
     if (isBefore(appointmentDate, Date.now())) {
       throw new AppError("You can't create an appointment on past date.");
-    };
+    }
 
     if (user_id === provider_id) {
       throw new AppError("You can't create an appointment with yourself.");
@@ -40,6 +40,7 @@ class CreateAppointmentService {
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
+      provider_id,
     );
 
     if (findAppointmentInSameDate) {
