@@ -29,7 +29,6 @@ class AuthenticateUserService {
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -52,7 +51,10 @@ class AuthenticateUserService {
       expiresIn,
     });
 
-    return { user, token };
+    return {
+      user,
+      token,
+    };
   }
 }
 

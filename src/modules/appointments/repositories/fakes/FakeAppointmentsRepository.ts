@@ -1,5 +1,5 @@
-import { v4 as uuid } from 'uuid';
-import {isEqual, getDate,getMonth, getYear} from 'date-fns';
+import { uuid } from 'uuidv4';
+import { isEqual, getMonth, getYear, getDate } from 'date-fns';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
@@ -11,20 +11,24 @@ import Appointment from '../../infra/typeorm/entities/Appointment';
 class AppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(
+    date: Date,
+    provider_id: string,
+  ): Promise<Appointment | undefined> {
     const findAppointment = this.appointments.find(
-      appointment => isEqual(appointment.date, date),
+      appointment =>
+        isEqual(appointment.date, date) &&
+        appointment.provider_id === provider_id,
     );
 
     return findAppointment;
   }
 
-  public async findAllInMonthFromProvider(
-    {provider_id,
+  public async findAllInMonthFromProvider({
+    provider_id,
     month,
     year,
-  }: IFindAllInMonthFromProviderDTO
-  ): Promise<Appointment[]> {
+  }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
     const appointments = this.appointments.filter(appointment => {
       return (
         appointment.provider_id === provider_id &&
@@ -36,13 +40,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointments;
   }
 
-  public async findAllInDayFromProvider(
-    {provider_id,
+  public async findAllInDayFromProvider({
+    provider_id,
     day,
     month,
     year,
-  }: IFindAllInDayFromProviderDTO
-  ): Promise<Appointment[]> {
+  }: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
     const appointments = this.appointments.filter(appointment => {
       return (
         appointment.provider_id === provider_id &&
@@ -60,7 +63,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     user_id,
     date,
   }: ICreateAppointmentDTO): Promise<Appointment> {
-    const appointment =  new Appointment();
+    const appointment = new Appointment();
 
     Object.assign(appointment, { id: uuid(), date, provider_id, user_id });
 

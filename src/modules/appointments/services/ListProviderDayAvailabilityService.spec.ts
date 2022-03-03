@@ -1,5 +1,3 @@
-import AppError from '@shared/errors/AppError';
-
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import ListProviderDayAvailabilityService from './ListProviderDayAvailabilityService';
 
@@ -20,6 +18,7 @@ describe('ListProviderMonthAvailability', () => {
       user_id: 'user',
       date: new Date(2020, 4, 20, 14, 0, 0),
     });
+
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
       user_id: 'user',
@@ -32,9 +31,9 @@ describe('ListProviderMonthAvailability', () => {
 
     const availability = await listProviderDayAvailability.execute({
       provider_id: 'user',
-      day: 20,
       year: 2020,
       month: 5,
+      day: 20,
     });
 
     expect(availability).toEqual(

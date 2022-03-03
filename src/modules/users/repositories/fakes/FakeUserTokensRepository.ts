@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { uuid } from 'uuidv4';
 
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 
@@ -23,7 +23,7 @@ class FakeUserTokensRepository implements IUserTokensRepository {
     return userToken;
   }
 
-  public async findByToken(token: string): Promise<UserToken | undefined>{
+  public async findByToken(token: string): Promise<UserToken | undefined> {
     const userToken = this.userTokens.find(
       findToken => findToken.token === token,
     );
